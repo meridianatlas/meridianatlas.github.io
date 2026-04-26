@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Atlas — Editorial Wall Art</title>
+<meta name="description" content="Editorial wall art for the cities you love. AI-created decorative city map prints. Milano, Paris, London, NYC, Roma & more.">
+<meta name="author" content="Meridian Atlas Co.">
+
+<!-- Open Graph for social sharing -->
+<meta property="og:title" content="Meridian Atlas — Editorial Wall Art">
+<meta property="og:description" content="Editorial wall art for the cities you love. AI-created decorative city map prints.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://meridianatlas.co">
+<meta property="og:image" content="https://meridianatlas.co/assets/og-cover.jpg">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meridian Atlas — Editorial Wall Art">
+<meta name="twitter:description" content="Editorial wall art for the cities you love. AI-created decorative city map prints.">
+<meta name="twitter:image" content="https://meridianatlas.co/assets/og-cover.jpg">
+
+<!-- Pinterest verification (sostituisci con il tuo codice quando claim il dominio) -->
+<!-- <meta name="p:domain_verify" content="REPLACE_WITH_PINTEREST_CODE"/> -->
+
+<!-- Google Fonts: Playfair Display + Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Favicon (placeholder, sostituisci con file vero) -->
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+
+<style>
+  /* ============= RESET ============= */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #F2EDE2;
+    color: #1A1A1A;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============= TYPOGRAPHY ============= */
+  .serif { font-family: 'Playfair Display', Georgia, serif; }
+  .sans { font-family: 'Inter', sans-serif; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: #A4B59A;
+    font-weight: 400;
+  }
+
+  /* ============= LAYOUT HELPERS ============= */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .section {
+    padding: 100px 0;
+  }
+  .section-narrow {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+    text-align: center;
+  }
+  .divider {
+    width: 60px;
+    height: 1px;
+    background-color: #1A1A1A;
+    margin: 32px auto;
+  }
+
+  /* ============= HERO ============= */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 32px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    line-height: 1.1;
+  }
+  .hero .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: #1A1A1A;
+    margin-top: 24px;
+    max-width: 600px;
+  }
+  .hero .tagline-it {
+    margin-top: 24px;
+  }
+
+  /* ============= BUTTON ============= */
+  .btn {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 16px 36px;
+    background-color: #1A1A1A;
+    color: #F2EDE2;
+    border: 1px solid #1A1A1A;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 48px;
+  }
+  .btn:hover {
+    background-color: transparent;
+    color: #1A1A1A;
+  }
+  .btn-outline {
+    background-color: transparent;
+    color: #1A1A1A;
+  }
+  .btn-outline:hover {
+    background-color: #1A1A1A;
+    color: #F2EDE2;
+  }
+
+  /* ============= MANIFESTO ============= */
+  .manifesto {
+    text-align: center;
+    padding: 100px 32px;
+  }
+  .manifesto p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.6;
+    color: #1A1A1A;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ============= COLLECTION ============= */
+  .collection {
+    padding: 100px 32px;
+    text-align: center;
+  }
+  .collection-header {
+    margin-bottom: 64px;
+  }
+  .collection-header .section-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #1A1A1A;
+    margin-top: 16px;
+  }
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .city-card {
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .city-card:hover {
+    transform: translateY(-4px);
+  }
+  .city-card-image {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background-color: #C9C2B6;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .city-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .city-card-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+  }
+  .city-card-edition {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #A4B59A;
+  }
+  .collection-cta {
+    margin-top: 80px;
+  }
+
+  /* ============= PRINT & MATERIALS ============= */
+  .materials {
+    padding: 100px 32px;
+    text-align: center;
+    background-color: #ECE5D5;
+  }
+  .materials h2 {
+    margin-bottom: 32px;
+  }
+  .materials p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 24px;
+    color: #1A1A1A;
+  }
+
+  /* ============= NEWSLETTER ============= */
+  .newsletter {
+    padding: 100px 32px;
+    text-align: center;
+  }
+  .newsletter h2 {
+    margin-bottom: 16px;
+  }
+  .newsletter .description {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: #1A1A1A;
+    max-width: 500px;
+    margin: 0 auto 40px;
+  }
+  .newsletter-form {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .newsletter-form input[type="email"] {
+    padding: 16px 20px;
+    border: 1px solid #1A1A1A;
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: #1A1A1A;
+    width: 100%;
+  }
+  .newsletter-form input[type="email"]::placeholder {
+    color: #1A1A1A;
+    opacity: 0.5;
+  }
+  .newsletter-form input[type="email"]:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  .newsletter-form button {
+    padding: 16px 36px;
+    background-color: #1A1A1A;
+    color: #F2EDE2;
+    border: 1px solid #1A1A1A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .newsletter-form button:hover {
+    background-color: transparent;
+    color: #1A1A1A;
+  }
+  .newsletter-disclaimer {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #1A1A1A;
+    opacity: 0.6;
+    margin-top: 24px;
+    letter-spacing: 0.05em;
+  }
+  .newsletter-success {
+    display: none;
+    color: #A4B59A;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 24px;
+  }
+
+  /* ============= FOOTER ============= */
+  .footer {
+    background-color: #1A1A1A;
+    color: #F2EDE2;
+    padding: 60px 32px 32px;
+    text-align: center;
+  }
+  .footer-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 32px;
+  }
+  .footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #F2EDE2;
+    transition: all 0.3s ease;
+    color: #F2EDE2;
+  }
+  .footer-socials a:hover {
+    background-color: #F2EDE2;
+    color: #1A1A1A;
+  }
+  .footer-socials svg {
+    width: 18px;
+    height: 18px;
+  }
+  .footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #F2EDE2;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+  .footer-copyright a {
+    text-decoration: underline;
+  }
+
+  /* ============= SECTION TITLES ============= */
+  h2.section-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: #A4B59A;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+  h2.section-headline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #1A1A1A;
+  }
+
+  /* ============= RESPONSIVE ============= */
+  @media (max-width: 768px) {
+    .section, .manifesto, .collection, .materials, .newsletter {
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+    .hero {
+      min-height: 80vh;
+    }
+    .collection-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .newsletter-form {
+      gap: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============= HERO ============= -->
+<section class="hero">
+  <div class="eyebrow">Edizioni d'arte per le città che ami</div>
+  <h1 style="margin-top: 24px;">Meridian Atlas</h1>
+  <div class="divider"></div>
+  <p class="tagline">Editorial wall art for the cities you love.</p>
+  <a href="https://www.redbubble.com/people/meridianatlas/shop" target="_blank" rel="noopener" class="btn">View Collection on Redbubble</a>
+</section>
+
+<!-- ============= MANIFESTO ============= -->
+<section class="manifesto">
+  <p>A small editorial studio.<br>
+  We design city map artwork — AI-created, hand-curated, prepared for high-quality print.<br>
+  One city at a time.</p>
+</section>
+
+<!-- ============= COLLECTION ============= -->
+<section class="collection" id="collection">
+  <div class="collection-header">
+    <h2 class="section-name">The Collection</h2>
+    <h2 class="section-headline">City Atlas — five editions, more coming.</h2>
+  </div>
+
+  <div class="collection-grid">
+
+    <!-- MILANO -->
+    <a class="city-card" href="https://www.redbubble.com/shop/ap/REPLACE_WITH_MILANO_PROMOTE_LINK" target="_blank" rel="noopener">
+      <div class="city-card-image">
+        <img src="assets/milano.jpg" alt="Milano editorial city map wall art mockup">
+      </div>
+      <div class="city-card-name">Milano</div>
+      <div class="city-card-edition">Edition No. 01</div>
+    </a>
+
+    <!-- PARIS -->
+    <a class="city-card" href="https://www.redbubble.com/shop/ap/REPLACE_WITH_PARIS_PROMOTE_LINK" target="_blank" rel="noopener">
+      <div class="city-card-image">
+        <img src="assets/paris.jpg" alt="Paris editorial city map wall art mockup">
+      </div>
+      <div class="city-card-name">Paris</div>
+      <div class="city-card-edition">Edition No. 02</div>
+    </a>
+
+    <!-- LONDON -->
+    <a class="city-card" href="https://www.redbubble.com/shop/ap/REPLACE_WITH_LONDON_PROMOTE_LINK" target="_blank" rel="noopener">
+      <div class="city-card-image">
+        <img src="assets/london.jpg" alt="London editorial city map wall art mockup">
+      </div>
+      <div class="city-card-name">London</div>
+      <div class="city-card-edition">Edition No. 03</div>
+    </a>
+
+    <!-- NEW YORK -->
+    <a class="city-card" href="https://www.redbubble.com/shop/ap/REPLACE_WITH_NY_PROMOTE_LINK" target="_blank" rel="noopener">
+      <div class="city-card-image">
+        <img src="assets/new-york.jpg" alt="New York editorial city map wall art mockup">
+      </div>
+      <div class="city-card-name">New York</div>
+      <div class="city-card-edition">Edition No. 04</div>
+    </a>
+
+    <!-- ROMA -->
+    <a class="city-card" href="https://www.redbubble.com/shop/ap/REPLACE_WITH_ROMA_PROMOTE_LINK" target="_blank" rel="noopener">
+      <div class="city-card-image">
+        <img src="assets/roma.jpg" alt="Roma editorial city map wall art mockup">
+      </div>
+      <div class="city-card-name">Roma</div>
+      <div class="city-card-edition">Edition No. 05</div>
+    </a>
+
+  </div>
+
+  <div class="collection-cta">
+    <a href="https://www.redbubble.com/people/meridianatlas/shop" target="_blank" rel="noopener" class="btn btn-outline">Browse All on Redbubble</a>
+  </div>
+</section>
+
+<!-- ============= PRINT & MATERIALS ============= -->
+<section class="materials">
+  <h2 class="section-name">Print &amp; Materials</h2>
+  <h2 class="section-headline" style="margin-bottom: 40px;">Made to live on a wall.</h2>
+  <p>Each piece is professionally printed on high-quality paper, framed or rolled, and shipped worldwide through our print partner.</p>
+  <p>Available formats include art print, framed art print, photographic print, canvas, poster, and postcard. Custom sizes from small to extra-large.</p>
+</section>
+
+<!-- ============= NEWSLETTER ============= -->
+<section class="newsletter">
+  <h2 class="section-name">Stay Updated</h2>
+  <p class="description">New editions, drops, and stories — straight to your inbox.</p>
+
+  <form class="newsletter-form" action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID" method="POST" id="newsletterForm">
+    <input type="email" name="email" placeholder="your.email@example.com" required>
+    <button type="submit">Subscribe</button>
+    <input type="hidden" name="_subject" value="New Meridian Atlas waitlist signup">
+    <input type="text" name="_gotcha" style="display:none">
+  </form>
+
+  <p class="newsletter-disclaimer">Rare emails. New editions and drops only. No spam.</p>
+
+  <div class="newsletter-success" id="newsletterSuccess">
+    Thank you. You're on the list.
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer class="footer">
+  <div class="footer-wordmark">Meridian Atlas</div>
+
+  <div class="footer-socials">
+    <a href="https://instagram.com/meridianatlasco" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="https://pinterest.com/meridianatlasco" target="_blank" rel="noopener" aria-label="Pinterest">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M11 7c-2.5 0-4 1.7-4 3.7 0 1.2.7 2.6 1.8 3 .2.1.3 0 .3-.1l.2-.7c0-.1 0-.2-.1-.3-.5-.5-.8-1.2-.8-2 0-1.7 1.3-3.2 3.4-3.2 1.8 0 2.9 1.1 2.9 2.6 0 2-.9 3.6-2.2 3.6-.7 0-1.3-.6-1.1-1.4.2-.9.6-1.9.6-2.6 0-.6-.3-1.1-1-1.1-.8 0-1.4.8-1.4 1.9 0 .7.2 1.2.2 1.2L8.7 16c-.3 1-.1 2.4-.1 2.5 0 .1.1.1.2 0 .1-.1 1.1-1.4 1.5-2.4l.5-1.9c.3.5 1 1 1.8 1 2.4 0 4-2.2 4-5 0-2.2-1.9-4.2-4.6-4.2z" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="mailto:studio@meridianatlas.co" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="footer-copyright">
+    &copy; 2026 Meridian Atlas Co. — All rights reserved.<br>
+    <a href="mailto:studio@meridianatlas.co">studio@meridianatlas.co</a>
+  </div>
+</footer>
+
+<!-- ============= SCRIPT ============= -->
+<script>
+  // Newsletter form: AJAX submit to Formspree, mostra messaggio successo
+  const form = document.getElementById('newsletterForm');
+  const success = document.getElementById('newsletterSuccess');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      alert('Network error. Please try again.');
+    }
+  });
+</script>
+
+</body>
+</html>

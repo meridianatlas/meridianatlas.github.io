@@ -1,8 +1,8 @@
 {
-  "nn":"01",
-  "city":"MILANO",
-  "country":"ITALIA",
-  "coords":"45.4642° N, 9.1900° E",
+  "nn": "01",
+  "city": "Milano",
+  "country": "Italy",
+  "coords": "45.4642° N, 9.1900° E",
   "feed_crop": "top",
   "story_mode": "bands",
   "overlay_pins": false,

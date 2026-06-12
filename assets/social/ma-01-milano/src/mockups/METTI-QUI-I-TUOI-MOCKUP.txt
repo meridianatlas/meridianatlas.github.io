@@ -1,0 +1,5 @@
+Copia qui i tuoi mockup finiti (jpg/png, qualsiasi nome, qualsiasi quantita').
+Per ogni file <nome>.jpg lo script genera:
+  <nome>-pin.jpg    1000x1500  (contenuto intatto)
+  <nome>-feed.jpg   1080x1350  (taglio 4:5 — opzione feed_crop in meta.json)
+  <nome>-story.jpg  1080x1920  (bande avorio o full-bleed — opzione story_mode)

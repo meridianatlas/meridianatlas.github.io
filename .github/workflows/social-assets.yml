@@ -31,57 +31,11 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q ffmpeg
 
-      - name: Debug Milano input
-        run: |
-          echo "=== PWD ==="
-          pwd
-
-          echo ""
-          echo "=== Repository root files ==="
-          ls -la
-
-          echo ""
-          echo "=== File presenti in assets/social/ma-01-milano ==="
-          find assets/social/ma-01-milano -maxdepth 5 -type f | sort || true
-
-          echo ""
-          echo "=== File font presenti ==="
-          find assets/social/_fonts -maxdepth 1 -type f | sort || true
-
-          echo ""
-          echo "=== meta.json Milano ==="
-          cat assets/social/ma-01-milano/src/meta.json || true
-
-          echo ""
-          echo "=== Controllo artwork Milano ==="
-          ls -la assets/social/ma-01-milano/src || true
-
-          echo ""
-          echo "=== Controllo mockups Milano ==="
-          ls -la assets/social/ma-01-milano/src/mockups || true
-
-      - name: Generate assets Milano
-        run: |
-          echo "=== Lancio script SOLO Milano ==="
-          python tools/generate_social_assets.py assets/social/ma-01-milano
-
-      - name: Debug Milano output
-        run: |
-          echo "=== Output generato per Milano ==="
-          find assets/social/ma-01-milano -maxdepth 2 -type f | sort || true
-
-      - name: Generate assets other cities
+      - name: Generate assets
         run: |
           for d in assets/social/ma-*/src; do
             [ -d "$d" ] || continue
-
             city_dir="$(dirname "$d")"
-
-            if [ "$city_dir" = "assets/social/ma-01-milano" ]; then
-              echo "=== Skip Milano: già generata nello step precedente ==="
-              continue
-            fi
-
             echo ""
             echo "=== Genero $city_dir ==="
             python tools/generate_social_assets.py "$city_dir" || echo "::warning::fallita $city_dir, continuo"

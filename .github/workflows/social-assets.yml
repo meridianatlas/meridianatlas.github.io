@@ -14,6 +14,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,14 +26,65 @@ jobs:
 
       - name: Install deps
         run: |
+          python -m pip install --upgrade pip
           pip install pillow
-          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+          sudo apt-get update -q
+          sudo apt-get install -y -q ffmpeg
 
-      - name: Generate assets (le citta' incomplete vengono saltate)
+      - name: Debug Milano input
+        run: |
+          echo "=== PWD ==="
+          pwd
+
+          echo ""
+          echo "=== Repository root files ==="
+          ls -la
+
+          echo ""
+          echo "=== File presenti in assets/social/ma-01-milano ==="
+          find assets/social/ma-01-milano -maxdepth 5 -type f | sort || true
+
+          echo ""
+          echo "=== File font presenti ==="
+          find assets/social/_fonts -maxdepth 1 -type f | sort || true
+
+          echo ""
+          echo "=== meta.json Milano ==="
+          cat assets/social/ma-01-milano/src/meta.json || true
+
+          echo ""
+          echo "=== Controllo artwork Milano ==="
+          ls -la assets/social/ma-01-milano/src || true
+
+          echo ""
+          echo "=== Controllo mockups Milano ==="
+          ls -la assets/social/ma-01-milano/src/mockups || true
+
+      - name: Generate assets Milano
+        run: |
+          echo "=== Lancio script SOLO Milano ==="
+          python tools/generate_social_assets.py assets/social/ma-01-milano
+
+      - name: Debug Milano output
+        run: |
+          echo "=== Output generato per Milano ==="
+          find assets/social/ma-01-milano -maxdepth 2 -type f | sort || true
+
+      - name: Generate assets other cities
         run: |
           for d in assets/social/ma-*/src; do
             [ -d "$d" ] || continue
-            python tools/generate_social_assets.py "$(dirname "$d")" || echo "::warning::fallita $(dirname "$d"), continuo"
+
+            city_dir="$(dirname "$d")"
+
+            if [ "$city_dir" = "assets/social/ma-01-milano" ]; then
+              echo "=== Skip Milano: già generata nello step precedente ==="
+              continue
+            fi
+
+            echo ""
+            echo "=== Genero $city_dir ==="
+            python tools/generate_social_assets.py "$city_dir" || echo "::warning::fallita $city_dir, continuo"
           done
 
       - name: Build site
@@ -43,6 +95,8 @@ jobs:
         run: |
           git config user.name "meridian-asset-bot"
           git config user.email "actions@users.noreply.github.com"
+
           git add -A assets/social index.html style.css sitemap.xml
           find . -maxdepth 1 -type d -name "ma-*" -print0 | xargs -0 -r git add -A
+
           git diff --cached --quiet || { git commit -m "auto: assets + site [skip ci]"; git push; }

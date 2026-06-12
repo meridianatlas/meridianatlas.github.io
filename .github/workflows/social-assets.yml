@@ -1,0 +1,45 @@
+name: social-assets
+
+# Si attiva SOLO quando cambiano i file sorgente (src/) di una citta'
+# o il motore stesso. Gli output committati dal bot non ritriggherano il flusso.
+on:
+  push:
+    paths:
+      - "assets/social/*/src/**"
+      - "tools/generate_social_assets.py"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          pip install pillow
+          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Generate assets for every city with a src/ folder
+        run: |
+          set -e
+          for d in assets/social/ma-*/src; do
+            [ -d "$d" ] || continue
+            python tools/generate_social_assets.py "$(dirname "$d")"
+          done
+
+      - name: Commit generated assets
+        run: |
+          git config user.name "meridian-asset-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A assets/social
+          git diff --cached --quiet || { git commit -m "auto: social assets [skip ci]"; git push; }

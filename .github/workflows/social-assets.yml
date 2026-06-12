@@ -1,0 +1,45 @@
+name: social-assets
+
+on:
+  push:
+    paths:
+      - "assets/social/*/src/**"
+      - "tools/generate_social_assets.py"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          pip install pillow
+          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Generate assets (le citta' incomplete vengono saltate)
+        run: |
+          for d in assets/social/ma-*/src; do
+            [ -d "$d" ] || continue
+            python tools/generate_social_assets.py "$(dirname "$d")" || echo "::warning::fallita $(dirname "$d"), continuo"
+          done
+
+      - name: Build site
+        run: python tools/generate_social_assets.py --site
+
+      - name: Commit generated assets + site
+        run: |
+          git config user.name "meridian-asset-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A assets/social atlas sitemap.xml
+          git diff --cached --quiet || { git commit -m "auto: assets + site [skip ci]"; git push; }

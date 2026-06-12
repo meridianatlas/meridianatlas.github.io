@@ -409,7 +409,7 @@ def main(city_dir):
 
 # ====================================================================== SITE =
 SITE = "https://meridianatlas.co"
-METRICOOL_PIXEL = '<img src="https://tracker.metricool.com/c3po.jpg?hash=44bdd722cca4b0fe96908e87b58222a9"/>'
+METRICOOL_PIXEL = '<img src="https://tracker.metricool.com/c3po.jpg?hash=44bdd722cca4b0fe96908e87b58222a9" alt="" width="1" height="1" loading="lazy" style="position:absolute;width:1px;height:1px;opacity:0"/>'
 
 REDBUBBLE_LINKS = {
     "Amsterdam": "https://www.redbubble.com/shop/ap/180322890",
@@ -476,81 +476,410 @@ def _asset(slug, filename):
     return f"/assets/social/{slug}/{filename}"
 
 
+ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
+
+GOOGLE_FONTS = ("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700"
+                "&family=Inter:wght@400;500;600;800&display=swap")
+
+GRAIN = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E"
+         "%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' "
+         "stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+
+COMPASS = ('<svg class="compass" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" focusable="false">'
+           '<circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1"/>'
+           '<circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" stroke-width=".6" opacity=".45"/>'
+           '<path d="M20 3.5 22.6 20 20 36.5 17.4 20Z" fill="#9C7A3C"/>'
+           '<path d="M3.5 20 20 17.4 36.5 20 20 22.6Z" fill="currentColor" opacity=".8"/>'
+           '<circle cx="20" cy="20" r="1.7" fill="#F2EDE2" stroke="currentColor" stroke-width=".9"/></svg>')
+
+DIAMOND = '<span class="dia" aria-hidden="true">&#9670;</span>'
+
+# --------------------------------------------------------------------- css --
 CSS = """
 :root{
-  --ivory:#F2EDE2;--paper:#FBF7EF;--ink:#191917;--muted:#81796D;--line:rgba(25,25,23,.20);
-  --sage:#617468;--blue:#9AA9B0;--max:1160px;--pad:clamp(20px,4vw,52px);
+  --paper:#F2EDE2;--paper-2:#ECE4D1;--ink:#1A1A1A;--sepia:#6A6253;
+  --line:rgba(26,26,26,.22);--line-soft:rgba(26,26,26,.12);
+  --sage:#7A8B73;--blue:#BCD2DE;--brass:#9C7A3C;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:Inter,Helvetica,Arial,sans-serif;
+  --rail:34px;--max:1180px;--pad:clamp(24px,4.5vw,56px);
 }
-*{box-sizing:border-box}html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}html{scroll-behavior:smooth}
-body{background:var(--ivory);color:var(--ink);font-family:Inter,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55}
-img,video{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),100%);margin-inline:auto;padding-inline:var(--pad)}
-.skip{position:absolute;left:-999px;top:10px;background:var(--ink);color:var(--ivory);padding:10px 14px;z-index:20}.skip:focus{left:10px}.site-header{position:sticky;top:0;z-index:10;background:rgba(242,237,226,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{font-size:12px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;white-space:nowrap}.nav-links{display:flex;gap:22px;align-items:center;flex-wrap:wrap}.nav-links a{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}.nav-links a:hover{color:var(--ink)}
-.eyebrow{font-size:11px;font-weight:850;letter-spacing:.30em;text-transform:uppercase;color:var(--muted)}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:14px 22px;border:1.4px solid var(--ink);font-size:11px;font-weight:850;letter-spacing:.20em;text-transform:uppercase;transition:.18s ease;background:transparent}.btn.primary{background:var(--ink);color:var(--ivory)}.btn:hover{transform:translateY(-1px)}.btn.primary:hover{background:transparent;color:var(--ink)}.btn.muted{border-color:var(--line);color:var(--muted)}
-.home-hero{padding:clamp(46px,8vw,92px) 0 clamp(46px,7vw,82px)}.home-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,430px);gap:clamp(30px,6vw,74px);align-items:center}.kicker-line{display:flex;align-items:center;gap:14px}.kicker-line:after{content:"";height:1px;background:var(--line);flex:1;max-width:180px}.home-title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(52px,9vw,104px);line-height:.92;letter-spacing:.025em;margin:18px 0 0;max-width:720px}.home-title em{font-style:italic;font-weight:700}.lead{font-size:clamp(17px,2vw,21px);line-height:1.65;color:#444039;margin:24px 0 0;max-width:650px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.hero-note{margin-top:28px;padding-left:18px;border-left:2px solid var(--sage);color:var(--muted);font-size:14px;max-width:560px}.hero-art{position:relative;padding:16px;border:1px solid var(--line);background:rgba(251,247,239,.55)}.hero-art:before{content:"";position:absolute;inset:10px;border:1px solid var(--ink);pointer-events:none}.hero-art img{aspect-ratio:4/5;width:100%;object-fit:cover;border:1px solid var(--ink);background:var(--paper)}.hero-art figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:10px;font-weight:850;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;overflow:hidden}.marquee-inner{display:flex;gap:28px;white-space:nowrap;font-size:11px;font-weight:850;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);animation:drift 28s linear infinite}@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.section{padding:clamp(54px,8vw,92px) 0;border-top:1px solid var(--line)}.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:30px;align-items:end;margin-bottom:34px}.section-head h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,5vw,58px);line-height:1.03;letter-spacing:.035em;margin:10px 0 0}.section-head p{color:#514C44;margin:0}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:38px 28px}.card .plate{width:100%;aspect-ratio:2/3;object-fit:cover;border:1.4px solid var(--ink);background:var(--paper);transition:.22s ease}.card:hover .plate{transform:translateY(-4px);box-shadow:0 18px 44px rgba(25,25,23,.13)}.card figcaption{text-align:center;margin-top:14px}.no{font-size:10px;font-weight:850;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}.name{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.05em;margin-top:4px}.coords{font-size:11px;letter-spacing:.12em;color:var(--muted);margin-top:5px}.feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{border:1px solid var(--line);background:rgba(251,247,239,.48);padding:26px}.feature h3{font-family:'Playfair Display',Georgia,serif;font-size:27px;line-height:1.1;margin:0 0 10px}.feature p{margin:0;color:#514C44}.quote{font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,4.6vw,54px);line-height:1.14;text-align:center;max-width:900px;margin:0 auto}.quote small{display:block;font-family:Inter,Helvetica,Arial,sans-serif;font-size:11px;font-weight:850;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-top:24px}
-.breadcrumb{font-size:11px;font-weight:850;letter-spacing:.20em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}.city-hero{padding:clamp(42px,7vw,78px) 0}.city-title{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,520px);gap:clamp(30px,6vw,70px);align-items:center}.city-title h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(52px,9vw,112px);line-height:.95;letter-spacing:.025em;margin:16px 0 0}.meta-line{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;color:var(--muted);font-size:12px;font-weight:850;letter-spacing:.18em;text-transform:uppercase}.story{font-size:18px;line-height:1.75;color:#444039;margin:26px 0 0;max-width:680px}.city-panel{border:1px solid var(--line);background:rgba(251,247,239,.5);padding:24px;margin-top:30px}.city-panel dl{display:grid;grid-template-columns:118px 1fr;gap:10px 18px;margin:0}.city-panel dt{font-size:11px;font-weight:850;letter-spacing:.20em;text-transform:uppercase;color:var(--muted)}.city-panel dd{font-size:14px;margin:0}.plate{border:1.4px solid var(--ink);background:var(--paper)}.gallery{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}.gallery-stack{display:grid;gap:28px}.caption{font-size:11px;font-weight:850;letter-spacing:.20em;text-transform:uppercase;color:var(--muted);margin-top:12px;text-align:center}.note{font-size:13px;color:var(--muted);margin:14px 0 0}.footer{border-top:1px solid var(--line);padding:34px 0 58px;text-align:center}.footer p{font-size:12px;letter-spacing:.1em;color:var(--muted);margin:4px 0}:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
-@media(max-width:900px){.home-hero-grid,.city-title,.gallery,.section-head{grid-template-columns:1fr}.hero-art{max-width:420px;margin-inline:auto}.feature-row{grid-template-columns:1fr}.nav{align-items:flex-start;padding:20px 0}.nav-links{justify-content:flex-end}.marquee-inner{animation:none;flex-wrap:wrap;white-space:normal}.city-title .plate{max-width:520px;margin:auto}}
-@media(max-width:560px){.brand{letter-spacing:.20em;font-size:11px}.nav-links{gap:14px}.nav-links a{letter-spacing:.14em}.hero-actions{display:grid}.btn{width:100%}.grid{grid-template-columns:1fr 1fr;gap:28px 18px}.home-title{font-size:clamp(48px,16vw,72px)}.lead{font-size:16px}.city-panel dl{grid-template-columns:1fr}.hero-art{padding:12px}.hero-art figcaption{display:block}.home-hero{padding-top:38px}}
-@media(prefers-reduced-motion:reduce){.marquee-inner{animation:none}html{scroll-behavior:auto}.btn,.plate{transition:none}}
-""".strip() + "\n"
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:clip}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding-left:var(--rail);
+}
+body::after{ /* grana carta */
+  content:"";position:fixed;inset:0;z-index:4;pointer-events:none;
+  background:url("GRAIN_URI");background-size:160px;opacity:.05;mix-blend-mode:multiply;
+}
+::selection{background:var(--blue);color:var(--ink)}
+img,video{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(var(--max),100%);margin-inline:auto;padding-inline:var(--pad)}
+.skip{position:absolute;left:-999px;top:10px;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:40}
+.skip:focus{left:calc(var(--rail) + 10px)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+.dia{color:var(--brass);font-size:.62em;vertical-align:.18em;margin-inline:.15em}
 
+/* ------------------------------------------------ meridiano (firma) ----- */
+.meridian{
+  position:fixed;inset:0 auto 0 0;width:var(--rail);z-index:30;
+  border-right:1px solid var(--line);background:var(--paper);
+}
+.meridian::before{ /* graduazioni */
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(to bottom,var(--line) 0 1px,transparent 1px 64px) right top/16px 100% no-repeat,
+    repeating-linear-gradient(to bottom,var(--line-soft) 0 1px,transparent 1px 16px) right top/9px 100% no-repeat;
+}
+.meridian b{
+  position:absolute;left:0;right:0;text-align:center;
+  font:800 9px/1 var(--sans);letter-spacing:.22em;color:var(--sepia);
+}
+.meridian b:first-of-type{top:10px}
+.meridian b:last-of-type{bottom:10px}
+.meridian i{ /* ago in ottone */
+  position:absolute;top:26px;left:50%;width:11px;height:11px;display:none;
+  background:var(--brass);transform:translateX(-50%) rotate(45deg);
+  box-shadow:0 0 0 2px var(--paper);
+}
+.voyage{position:fixed;top:0;left:0;right:0;height:3px;z-index:31;display:none;
+  background:var(--brass);transform-origin:0 50%;transform:scaleX(0)}
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .meridian i{display:block;animation:southward linear both;animation-timeline:scroll(root)}
+    @keyframes southward{to{top:calc(100% - 37px)}}
+    .voyage{animation:voyage linear both;animation-timeline:scroll(root)}
+    @keyframes voyage{to{transform:scaleX(1)}}
+  }
+}
+
+/* ------------------------------------------------------------ header ---- */
+.site-header{
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb,var(--paper) 96%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font:800 12px/1.3 var(--sans);letter-spacing:.34em;text-transform:uppercase;white-space:nowrap}
+.brand small{display:block;font-weight:600;font-size:8px;letter-spacing:.4em;color:var(--sepia);margin-top:4px}
+.nav-links{display:flex;gap:26px;flex-wrap:wrap}
+.nav-links a{font:800 10px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--sepia);
+  padding:6px 0;border-bottom:1px solid transparent}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--brass)}
+
+/* ---------------------------------------------------------- testo base -- */
+.eyebrow{font:800 10.5px/1.4 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--sepia);margin:0}
+.kicker{display:flex;align-items:center;gap:16px}
+.kicker::after{content:"";height:1px;flex:1;max-width:170px;background:var(--line)}
+h1,h2{text-wrap:balance}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:50px;padding:14px 26px;border:1.4px solid var(--ink);
+  font:800 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  background:transparent;transition:transform .16s ease,background .16s ease,color .16s ease;
+}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary:hover{background:transparent;color:var(--ink)}
+.btn.muted{border-color:var(--line);color:var(--sepia)}
+
+/* -------------------------------------------------- cornice da tavola --- */
+.plate-frame{position:relative;background:var(--paper);border:1px solid var(--ink);padding:15px}
+.plate-frame::before{content:"";position:absolute;inset:7px;border:1px solid var(--line);pointer-events:none}
+.plate-frame::after{ /* tacche di graduazione della cornice */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;
+  background:
+    repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 18px) left top/100% 6px,
+    repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 18px) left bottom/100% 6px,
+    repeating-linear-gradient(0deg,var(--ink) 0 1px,transparent 1px 18px) left top/6px 100%,
+    repeating-linear-gradient(0deg,var(--ink) 0 1px,transparent 1px 18px) right top/6px 100%;
+  background-repeat:no-repeat;
+}
+.plate-frame img,.plate-frame video{border:1px solid var(--ink);width:100%;background:var(--paper-2)}
+.fig video{aspect-ratio:4/5;object-fit:cover;height:auto}
+.folio{
+  display:flex;justify-content:space-between;gap:14px;margin-top:13px;
+  font:800 10px/1.5 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--sepia);
+}
+.folio b{color:var(--ink)}
+
+/* ------------------------------------------------------- frontespizio --- */
+.hero{padding-block:clamp(48px,8vw,100px) clamp(44px,7vw,84px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);
+  gap:clamp(34px,6vw,80px);align-items:center}
+.hero h1{
+  font-family:var(--serif);font-weight:700;font-style:italic;
+  font-size:clamp(54px,8.6vw,116px);line-height:.96;letter-spacing:.005em;margin:22px 0 0;
+}
+.hero h1 .rm{font-style:normal;letter-spacing:.02em}
+.lead{font-size:clamp(17px,1.9vw,20px);line-height:1.7;color:#43403A;margin:26px 0 0;max-width:600px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.edition{
+  margin-top:30px;padding:14px 0 0;border-top:1px solid var(--line);max-width:560px;
+  font-size:13.5px;color:var(--sepia);display:flex;gap:14px;align-items:flex-start;
+}
+.edition .compass{flex:none;color:var(--ink)}
+
+/* ----------------------------------------------------------- ticker ----- */
+.ticker{overflow:hidden;border-block:1px solid var(--line);background:var(--paper-2);padding:13px 0}
+.ticker-track{display:flex;gap:0;width:max-content;animation:tick 46s linear infinite}
+.ticker span{font:800 10.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;
+  color:var(--sepia);white-space:nowrap;padding-right:34px}
+.ticker .dia{margin-right:34px}
+@keyframes tick{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none;flex-wrap:wrap;white-space:normal}}
+
+/* ----------------------------------------------------------- sezioni ---- */
+.section{padding-block:clamp(58px,8vw,100px);border-top:1px solid var(--line);scroll-margin-top:92px}
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,400px);
+  gap:30px;align-items:end;margin-bottom:clamp(34px,5vw,52px)}
+.section-head h2{font-family:var(--serif);font-weight:700;
+  font-size:clamp(34px,4.8vw,56px);line-height:1.05;letter-spacing:.02em;margin:12px 0 0}
+.section-head p{color:#514C44;margin:0;font-size:15.5px}
+
+/* --------------------------------------------------- griglia tavole ----- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:44px 30px}
+.card a{display:block;position:relative}
+.card .plate{width:100%;aspect-ratio:2/3;object-fit:cover;border:1.4px solid var(--ink);
+  background:var(--paper-2);transition:transform .22s ease,box-shadow .22s ease}
+.card a::after{ /* crocini di registro all'hover */
+  content:"";position:absolute;inset:-9px;pointer-events:none;opacity:0;transition:opacity .2s ease;
+  background:
+    linear-gradient(var(--brass),var(--brass)) left 0 top 0/15px 1.5px,
+    linear-gradient(var(--brass),var(--brass)) left 0 top 0/1.5px 15px,
+    linear-gradient(var(--brass),var(--brass)) right 0 top 0/15px 1.5px,
+    linear-gradient(var(--brass),var(--brass)) right 0 top 0/1.5px 15px,
+    linear-gradient(var(--brass),var(--brass)) left 0 bottom 0/15px 1.5px,
+    linear-gradient(var(--brass),var(--brass)) left 0 bottom 0/1.5px 15px,
+    linear-gradient(var(--brass),var(--brass)) right 0 bottom 0/15px 1.5px,
+    linear-gradient(var(--brass),var(--brass)) right 0 bottom 0/1.5px 15px;
+  background-repeat:no-repeat;
+}
+.card a:hover .plate{transform:translateY(-4px);box-shadow:0 20px 44px rgba(26,26,26,.14)}
+.card a:hover::after{opacity:1}
+.card figcaption{text-align:center;margin-top:15px}
+.card .no{font:800 10px/1.4 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--sepia)}
+.card .name{font-family:var(--serif);font-size:23px;font-weight:700;letter-spacing:.05em;margin-top:5px}
+.card .coords{font-size:11px;letter-spacing:.12em;color:var(--sepia);margin-top:5px;font-variant-numeric:tabular-nums}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion:no-preference){
+    .card{animation:surface .6s ease both;animation-timeline:view();animation-range:entry 0% entry 38%}
+    @keyframes surface{from{opacity:0;transform:translateY(26px)}}
+  }
+}
+
+/* --------------------------------------------- indice delle tavole ------ */
+.plate-index{list-style:none;margin:0;padding:0;columns:2;column-gap:70px}
+.plate-index li{break-inside:avoid}
+.plate-index a{display:flex;align-items:baseline;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line-soft)}
+.plate-index .city{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.04em}
+.plate-index .dots{flex:1;border-bottom:2px dotted var(--line);transform:translateY(-5px);min-width:30px}
+.plate-index .no{font:800 11px/1 var(--sans);letter-spacing:.2em;color:var(--sepia);font-variant-numeric:tabular-nums;white-space:nowrap}
+.plate-index a:hover .city{color:var(--brass)}
+.plate-index a:hover .no{color:var(--ink)}
+
+/* ----------------------------------------------------------- processo --- */
+.method{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+.method article{padding:30px 28px 34px;border-left:1px solid var(--line)}
+.method article:first-child{border-left:0}
+.method .rn{font-family:var(--serif);font-style:italic;font-weight:700;font-size:44px;color:var(--brass);line-height:1}
+.method h3{font-family:var(--serif);font-size:25px;line-height:1.15;letter-spacing:.02em;margin:14px 0 10px}
+.method p{margin:0;color:#514C44;font-size:14.5px}
+
+/* ----------------------------------------------------------- epigrafe --- */
+.quote{font-family:var(--serif);font-style:italic;font-weight:700;
+  font-size:clamp(28px,4.4vw,50px);line-height:1.2;text-align:center;max-width:880px;margin:0 auto}
+.quote small{display:block;font:800 10.5px/1 var(--sans);font-style:normal;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--sepia);margin-top:26px}
+
+/* -------------------------------------------------------- pagina citta -- */
+.breadcrumb{font:800 10.5px/1.6 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--sepia);margin:0 0 26px}
+.breadcrumb a:hover{color:var(--brass)}
+.city-hero{padding-block:clamp(44px,7vw,82px)}
+.city-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,520px);
+  gap:clamp(32px,6vw,72px);align-items:start}
+.city-grid h1{font-family:var(--serif);font-weight:700;
+  font-size:clamp(56px,8.8vw,116px);line-height:.95;letter-spacing:.02em;margin:16px 0 0}
+.meta-line{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;color:var(--sepia);
+  font:800 11.5px/1.6 var(--sans);letter-spacing:.18em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.story{font-size:17.5px;line-height:1.8;color:#43403A;margin:28px 0 0;max-width:640px}
+.story::first-letter{
+  font-family:var(--serif);font-weight:700;float:left;
+  font-size:3.6em;line-height:.82;padding:6px 12px 0 0;color:var(--ink);
+}
+@supports (initial-letter:3){
+  .story::first-letter{float:none;font-size:inherit;padding:0 .12em 0 0;initial-letter:3;-webkit-initial-letter:3}
+}
+.record{border:1px solid var(--line);background:var(--paper-2);padding:26px;margin-top:34px;max-width:640px}
+.record h2{font:800 10.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--sepia);margin:0 0 18px}
+.record dl{display:grid;grid-template-columns:128px 1fr;gap:11px 20px;margin:0}
+.record dt{font:800 10.5px/1.7 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--sepia)}
+.record dd{font-size:14px;margin:0}
+.record .note{font-size:12.5px;color:var(--sepia);margin:18px 0 0}
+
+/* ----------------------------------------------------------- galleria --- */
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(26px,4vw,44px)}
+.fig{margin:0}
+.fig figcaption{margin-top:12px;font:800 10.5px/1.6 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--sepia)}
+.fig figcaption .rn{font-family:var(--serif);font-style:italic;font-weight:700;
+  font-size:17px;letter-spacing:0;text-transform:none;color:var(--brass);margin-right:9px}
+.zoomable{cursor:zoom-in}
+
+/* ------------------------------------------------------ sfoglia tavole -- */
+.leaf{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;
+  border:1px solid var(--line);margin-top:clamp(40px,6vw,64px)}
+.leaf a{padding:22px 24px;display:block}
+.leaf a:hover .name{color:var(--brass)}
+.leaf .dir{display:block;font:800 9.5px/1.6 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--sepia)}
+.leaf .name{display:block;font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.03em;margin-top:4px}
+.leaf .next{text-align:right;border-left:1px solid var(--line)}
+.leaf .home{padding:22px 18px;border-left:1px solid var(--line);color:var(--sepia)}
+.leaf .home:hover{color:var(--brass)}
+
+/* ----------------------------------------------------------- lightbox --- */
+.lightbox{border:1px solid var(--ink);padding:14px;background:var(--paper);max-width:min(92vw,860px)}
+.lightbox::backdrop{background:rgba(26,26,26,.62);backdrop-filter:blur(3px)}
+.lightbox img{border:1px solid var(--ink);max-height:82vh;width:auto;max-width:100%;margin:auto}
+.lb-x{position:absolute;top:8px;right:8px;width:38px;height:38px;border:1px solid var(--ink);
+  background:var(--paper);font:400 19px/1 var(--sans);cursor:pointer}
+.lb-x:hover{background:var(--ink);color:var(--paper)}
+
+/* ------------------------------------------------------------- footer --- */
+.footer{border-top:1px solid var(--line);padding:44px 0 64px;text-align:center}
+.footer .compass{margin:0 auto 18px;color:var(--ink)}
+.footer p{font-size:12.5px;letter-spacing:.08em;color:var(--sepia);margin:5px 0}
+.footer .colophon{font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-top:16px}
+
+/* ---------------------------------------------------- view transitions -- */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.34s}
+
+/* --------------------------------------------------------- responsive --- */
+@media(max-width:980px){
+  body{padding-left:0}
+  .meridian{display:none}
+  .voyage{display:block}
+  .skip:focus{left:10px}
+  .hero-grid,.city-grid,.section-head{grid-template-columns:1fr}
+  .hero-art-col{max-width:430px;margin-inline:auto;width:100%}
+  .method{grid-template-columns:1fr;border-left:0;border-right:0}
+  .method article{border-left:0;border-top:1px solid var(--line)}
+  .method article:first-child{border-top:0}
+  .plate-index{columns:1}
+  .city-grid .plate-frame{max-width:540px;margin-inline:auto}
+}
+@media(max-width:640px){
+  .brand{letter-spacing:.22em;font-size:11px}
+  .nav{flex-wrap:wrap;padding-block:14px;min-height:0}
+  .nav-links{gap:18px}
+  .hero{padding-top:40px}
+  .hero-actions{display:grid}
+  .btn{width:100%}
+  .grid{grid-template-columns:1fr 1fr;gap:32px 18px}
+  .gallery{grid-template-columns:1fr}
+  .record dl{grid-template-columns:1fr;gap:4px 0}
+  .record dt{margin-top:10px}
+  .leaf{grid-template-columns:1fr 1fr}
+  .leaf .home{display:none}
+  .leaf .next{border-left:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn,.card .plate,.card a::after{transition:none}
+  .card{animation:none}
+}
+""".replace("GRAIN_URI", GRAIN).strip() + "\n"
+
+# ----------------------------------------------------------------- js ------
+SPECULATION = ('<script type="speculationrules">'
+               '{"prerender":[{"where":{"href_matches":"/ma-*"},"eagerness":"moderate"}]}'
+               '</script>')
+
+LIGHTBOX = ('<dialog class="lightbox" id="lb">'
+            '<button class="lb-x" aria-label="Close enlarged view">&times;</button>'
+            '<img alt=""></dialog>'
+            '<script>(function(){var d=document.getElementById("lb");if(!d||!d.showModal)return;'
+            'var im=d.querySelector("img");'
+            'document.querySelectorAll(".zoomable").forEach(function(el){'
+            'el.addEventListener("click",function(){im.src=el.currentSrc||el.src;im.alt=el.alt||"";d.showModal()})});'
+            'd.addEventListener("click",function(e){if(e.target===d||e.target.classList.contains("lb-x"))d.close()});'
+            'd.addEventListener("close",function(){im.src=""})})();</script>')
 
 RM_JS = ('<script>if(matchMedia("(prefers-reduced-motion: reduce)").matches)'
-         'document.querySelectorAll("video[autoplay]").forEach(v=>{v.removeAttribute("autoplay");v.pause()})'
+         'document.querySelectorAll("video[autoplay]").forEach(function(v){v.removeAttribute("autoplay");v.pause()})'
          '</script>')
 
+MERIDIAN_HTML = ('<div class="meridian" aria-hidden="true"><b>N</b><i></i><b>S</b></div>'
+                 '<div class="voyage" aria-hidden="true"></div>')
 
-def _head(title, desc, og_image, canonical, css_href, extra_schema=None):
-    title_e = _e(title)
-    desc_e = _e(desc)
-    canonical_e = _e(canonical)
-    og_e = _e(_abs(og_image))
-    schema = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Meridian Atlas Co.",
-        "url": SITE,
-        "description": "Editorial, AI-created city map prints for considered interiors."
-    }
-    if extra_schema:
-        schema = [schema, extra_schema]
-    schema_json = json.dumps(schema, ensure_ascii=False)
+
+# --------------------------------------------------------------- frame ------
+def _head(title, desc, og_image, canonical, css_href, schemas=None, preload=None):
+    title_e, desc_e = _e(title), _e(desc)
+    canonical_e, og_e = _e(canonical), _e(_abs(og_image))
+    base = {"@context": "https://schema.org", "@type": "Organization",
+            "name": "Meridian Atlas Co.", "url": SITE,
+            "description": "Editorial, AI-created city map prints for considered interiors.",
+            "email": "studio@meridianatlas.co"}
+    blocks = [base] + (schemas or [])
+    schema_json = json.dumps(blocks if len(blocks) > 1 else blocks[0], ensure_ascii=False)
+    preload_tag = (f'  <link rel="preload" as="image" href="{_e(preload)}" fetchpriority="high">\n'
+                   if preload else "")
     return (f'<!doctype html>\n<html lang="en">\n<head>\n'
             f'  <meta charset="utf-8">\n'
             f'  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
             f'  <title>{title_e}</title>\n'
             f'  <meta name="description" content="{desc_e}">\n'
+            f'  <meta name="theme-color" content="#F2EDE2">\n'
             f'  <link rel="canonical" href="{canonical_e}">\n'
             f'  <meta property="og:type" content="website">\n'
+            f'  <meta property="og:site_name" content="Meridian Atlas Co.">\n'
             f'  <meta property="og:title" content="{title_e}">\n'
             f'  <meta property="og:description" content="{desc_e}">\n'
             f'  <meta property="og:image" content="{og_e}">\n'
             f'  <meta property="og:url" content="{canonical_e}">\n'
             f'  <meta name="twitter:card" content="summary_large_image">\n'
+            f'  <link rel="preconnect" href="https://fonts.googleapis.com">\n'
+            f'  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+            f'  <link rel="stylesheet" href="{_e(GOOGLE_FONTS)}">\n'
             f'  <link rel="stylesheet" href="{_e(css_href)}">\n'
+            f'{preload_tag}'
             f'  <script type="application/ld+json">{schema_json}</script>\n'
             f'</head>\n')
 
 
-def _header(home_link="/", label="Atlas"):
-    return (f'<a class="skip" href="#content">Skip to content</a>'
-            f'<header class="site-header"><div class="wrap nav">'
-            f'<a class="brand" href="{_e(home_link)}">Meridian Atlas Co.</a>'
-            f'<nav class="nav-links" aria-label="Main navigation">'
-            f'<a href="/">{_e(label)}</a><a href="/#atlas">Cities</a><a href="/#process">Process</a>'
-            f'</nav></div></header>')
+def _header():
+    return ('<a class="skip" href="#content">Skip to content</a>'
+            + MERIDIAN_HTML +
+            '<header class="site-header"><div class="wrap nav">'
+            '<a class="brand" href="/">Meridian Atlas Co.<small>Editorial city plates</small></a>'
+            '<nav class="nav-links" aria-label="Main navigation">'
+            '<a href="/#collection">Collection</a><a href="/#index">Index</a><a href="/#method">Method</a>'
+            '</nav></div></header>')
 
 
-FOOTER = ('<footer class="footer"><div class="wrap">'
-          '<p>All artworks are AI-created and refined for archival printing.</p>'
-          '<p>© Meridian Atlas Co. - Editorial wall art for the cities you love.</p>'
-          '</div></footer>')
+def _footer(count=None):
+    edition = (f'<p class="colophon">An atlas of {count} numbered plate{"s" if count != 1 else ""} &middot; new cities added through the year</p>'
+               if count else "")
+    return ('<footer class="footer"><div class="wrap">'
+            + COMPASS +
+            '<p>Every plate is an AI-created artwork, refined by hand and prepared for archival printing.</p>'
+            '<p>&copy; Meridian Atlas Co. &mdash; Editorial wall art for the cities you love.</p>'
+            + edition +
+            '<p class="colophon">Set in Playfair Display &amp; Inter &middot; printed on demand via Redbubble</p>'
+            '</div></footer>')
 
 
-def _page_end():
-    return FOOTER + METRICOOL_PIXEL + RM_JS + '</body></html>'
+def _page_end(count=None):
+    return _footer(count) + LIGHTBOX + METRICOOL_PIXEL + RM_JS + SPECULATION + '</body></html>'
 
 
 def _live_cities(root: Path):
@@ -580,35 +909,87 @@ def _cta_html(m):
     return f'<a class="btn primary" href="{_e(href)}" target="_blank" rel="noopener">View the print</a>'
 
 
-def _city_page(m):
+# --------------------------------------------------------------- pagine ----
+def _city_page(m, prev_m, next_m, count):
     slug, nn, city = m["_slug"], str(m["nn"]), m["city"]
-    country = m.get("country", "")
-    coords = m.get("coords", "")
-    desc = m.get("story") or (f"{city} - City Atlas No. {nn}. Editorial, AI-created map print in sage, dusty blue and warm ivory.")
+    country, coords = m.get("country", ""), m.get("coords", "")
+    desc = m.get("story") or (f"An editorial, AI-created map of {city} — plate No. {nn} in the "
+                              f"City Atlas — drawn in sage, dusty blue and warm ivory and prepared "
+                              f"for archival printing.")
     canonical = f"{SITE}/{slug}/"
+    of_n = f" of {count}" if count > 1 else ""
     artwork = _asset(slug, "feed-artwork.jpg")
     detail = _asset(slug, "feed-detail.jpg")
     card = _asset(slug, "feed-card.jpg")
     reel = _asset(slug, "reel.mp4")
     mockup = _asset(slug, m["_mockup_feed"]) if m.get("_mockup_feed") else ""
-    product_schema = {"@context":"https://schema.org","@type":"Product","name":f"{city} City Atlas Print","brand":{"@type":"Brand","name":"Meridian Atlas Co."},"image":_abs(artwork),"description":desc,"url":canonical}
-    gallery_mockup = (f'<figure><img class="plate" src="{_e(mockup)}" alt="{_e(city)} framed map print mockup" loading="lazy"><figcaption class="caption">Interior scale</figcaption></figure>') if mockup else ""
-    reel_html = (f'<figure><video class="plate" autoplay muted loop playsinline preload="metadata" src="{_e(reel)}"></video><figcaption class="caption">Motion preview</figcaption></figure>') if m.get("_has_reel") else ""
-    return (_head(f"{city} City Atlas Print - No. {nn} | Meridian Atlas Co.", desc, artwork, canonical, "../style.css", product_schema)
-        + '<body>' + _header("/", "Home")
-        + '<main id="content" class="wrap"><section class="city-hero"><p class="breadcrumb"><a href="/">The Atlas</a> / City print</p><div class="city-title"><div>'
-        + f'<p class="eyebrow">City Atlas - No. {_e(nn)}</p><h1>{_e(city)}</h1><div class="meta-line"><span>{_e(country)}</span><span>{_e(coords)}</span></div><p class="story">{_e(desc)}</p>'
-        + '<div class="hero-actions">' + _cta_html(m) + '<a class="btn" href="/#atlas">Explore the series</a></div>'
-        + '<div class="city-panel"><dl>'
-        + f'<dt>Series</dt><dd>City Atlas - No. {_e(nn)}</dd><dt>Palette</dt><dd>Sage, dusty blue and warm ivory</dd><dt>Method</dt><dd>AI-created artwork, editorial layout, print-ready assets</dd>'
-        + '</dl><p class="note">Availability and final print options are managed on Redbubble.</p></div></div>'
-        + f'<figure><img class="plate" src="{_e(artwork)}" alt="{_e(city)} editorial city map print"></figure></div></section>'
-        + '<section class="section"><div class="section-head"><div><p class="eyebrow">Gallery</p><h2>Artwork, details and campaign assets.</h2></div><p>Each city page presents the print as a small product story instead of a basic image gallery.</p></div>'
-        + '<div class="gallery"><div class="gallery-stack">'
-        + f'<figure><img class="plate" src="{_e(detail)}" alt="{_e(city)} map detail" loading="lazy"><figcaption class="caption">Map detail</figcaption></figure>'
-        + gallery_mockup + '</div><div class="gallery-stack">'
-        + f'<figure><img class="plate" src="{_e(card)}" alt="{_e(city)} typographic coordinates card" loading="lazy"><figcaption class="caption">Coordinates card</figcaption></figure>'
-        + reel_html + '</div></div></section></main>' + _page_end())
+    vt = f"plate-{slug}"
+
+    schemas = [
+        {"@type": "Product", "name": f"{city} City Atlas Print No. {nn}",
+         "brand": {"@type": "Brand", "name": "Meridian Atlas Co."},
+         "image": _abs(artwork), "description": desc, "url": canonical},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "The Atlas", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": f"{city} — No. {nn}", "item": canonical}]},
+    ]
+
+    figs, fig_i = [], 0
+    def fig(media, caption):
+        nonlocal fig_i
+        rn = ROMAN[fig_i] if fig_i < len(ROMAN) else str(fig_i + 1)
+        fig_i += 1
+        return (f'<figure class="fig"><div class="plate-frame">{media}</div>'
+                f'<figcaption><span class="rn">Fig. {rn}</span>{_e(caption)}</figcaption></figure>')
+
+    figs.append(fig(f'<img class="zoomable" src="{_e(detail)}" alt="{_e(city)} map detail, close crop of the street grid" width="1080" height="1350" loading="lazy">', "Map detail"))
+    if mockup:
+        figs.append(fig(f'<img class="zoomable" src="{_e(mockup)}" alt="{_e(city)} framed map print shown in an interior" width="1080" height="1350" loading="lazy">', "Interior scale"))
+    figs.append(fig(f'<img class="zoomable" src="{_e(card)}" alt="{_e(city)} typographic plate with coordinates" width="1080" height="1350" loading="lazy">', "Coordinates plate"))
+    if m.get("_has_reel"):
+        figs.append(fig(f'<video autoplay muted loop playsinline preload="metadata" poster="{_e(artwork)}" src="{_e(reel)}" width="1080" height="1920"></video>', "Motion preview"))
+
+    def leaf_link(c, cls, label):
+        return (f'<a class="{cls}" href="/{_e(c["_slug"])}/"><span class="dir">{label}</span>'
+                f'<span class="name">No. {_e(c["nn"])} &mdash; {_e(c["city"])}</span></a>')
+
+    leaf = ""
+    if count > 1:
+        leaf = ('<nav class="leaf" aria-label="Leaf through the atlas">'
+                + leaf_link(prev_m, "prev", "&larr; Previous plate")
+                + '<a class="home" href="/#index" aria-label="Index of plates">' + COMPASS + '</a>'
+                + leaf_link(next_m, "next", "Next plate &rarr;")
+                + '</nav>')
+
+    return (_head(f"{city} Map Print — City Atlas No. {nn} | Meridian Atlas Co.",
+                  desc, artwork, canonical, "../style.css", schemas, preload=artwork)
+        + '<body>' + _header()
+        + '<main id="content" class="wrap">'
+        + '<section class="city-hero">'
+        + f'<p class="breadcrumb"><a href="/">The Atlas</a> &nbsp;&middot;&nbsp; Plate No. {_e(nn)}{of_n}</p>'
+        + '<div class="city-grid"><div>'
+        + f'<p class="eyebrow">City Atlas &mdash; No. {_e(nn)}</p>'
+        + f'<h1>{_e(city)}</h1>'
+        + f'<div class="meta-line"><span>{_e(country)}</span><span class="dia" aria-hidden="true">&#9670;</span><span>{_e(coords)}</span></div>'
+        + f'<p class="story">{_e(desc)}</p>'
+        + '<div class="hero-actions" style="margin-top:30px">' + _cta_html(m)
+        + '<a class="btn" href="/#collection">All plates</a></div>'
+        + '<aside class="record"><h2>Plate record</h2><dl>'
+        + f'<dt>Series</dt><dd>City Atlas &mdash; No. {_e(nn)}{of_n}</dd>'
+        + '<dt>Palette</dt><dd>Sage, dusty blue and warm ivory on editorial black</dd>'
+        + '<dt>Method</dt><dd>AI-created artwork, refined by hand and prepared for print</dd>'
+        + f'<dt>Coordinates</dt><dd>{_e(coords)}</dd>'
+        + '</dl><p class="note">Sizes, papers and final print options are managed on Redbubble.</p></aside>'
+        + '</div>'
+        + f'<figure class="plate-frame" style="view-transition-name:{vt}">'
+        + f'<img src="{_e(artwork)}" alt="{_e(city)} editorial city map print, City Atlas No. {_e(nn)}" width="1080" height="1350" fetchpriority="high">'
+        + '</figure></div></section>'
+        + '<section class="section"><div class="section-head"><div>'
+        + '<p class="eyebrow">The figures</p><h2>One plate, studied four ways.</h2></div>'
+        + '<p>Tap any figure to enlarge it. Each study shows how the plate behaves: as a map, in a room, as typography and in motion.</p></div>'
+        + f'<div class="gallery">{"".join(figs)}</div>'
+        + leaf
+        + '</section></main>' + _page_end(count))
 
 
 def _index_page(cities):
@@ -616,31 +997,76 @@ def _index_page(cities):
     first = cities[0] if cities else None
     latest = cities[-1] if cities else None
     og = _asset(first["_slug"], "feed-artwork.jpg") if first else "/"
+
+    schemas = [{"@type": "ItemList", "name": "City Atlas — numbered plates",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": i + 1,
+                     "name": f'{m["city"]} — No. {m["nn"]}', "url": f'{SITE}/{m["_slug"]}/'}
+                    for i, m in enumerate(cities)]}]
+
     cards = "".join(
-        f'<a class="card" href="/{_e(m["_slug"])}/"><figure><img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" alt="{_e(m["city"])} map print - City Atlas No. {_e(m["nn"])}" loading="lazy"><figcaption><div class="no">No. {_e(m["nn"])}</div><div class="name">{_e(m["city"])}</div><div class="coords">{_e(m.get("coords", ""))}</div></figcaption></figure></a>'
+        f'<figure class="card"><a href="/{_e(m["_slug"])}/">'
+        f'<img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" '
+        f'alt="{_e(m["city"])} map print — City Atlas No. {_e(m["nn"])}" '
+        f'width="1000" height="1500" loading="lazy" style="view-transition-name:plate-{_e(m["_slug"])}">'
+        f'<figcaption><div class="no">Plate No. {_e(m["nn"])}</div>'
+        f'<div class="name">{_e(m["city"])}</div>'
+        f'<div class="coords">{_e(m.get("coords", ""))}</div></figcaption></a></figure>'
         for m in cities)
+
+    index_rows = "".join(
+        f'<li><a href="/{_e(m["_slug"])}/"><span class="city">{_e(m["city"])}</span>'
+        f'<span class="dots" aria-hidden="true"></span><span class="no">No. {_e(m["nn"])}</span></a></li>'
+        for m in cities)
+
     featured = ""
-    latest_name = latest.get("city") if latest else "New cities"
     if first:
-        featured = (f'<figure class="hero-art"><img src="{_e(_asset(first["_slug"], "feed-artwork.jpg"))}" alt="Featured Meridian Atlas city print: {_e(first["city"])}"><figcaption><span>No. {_e(first["nn"])}</span><span>{_e(first["city"])}</span></figcaption></figure>')
-    city_names = " • ".join(_e(m.get("city", "")) for m in cities[:12])
-    marquee = (city_names + " • Editorial city prints • AI-created wall art • ") * 2
-    return (_head("Meridian Atlas Co. - Editorial City Map Prints",
-              "Premium editorial city map prints: a numbered collection of AI-created atlas artworks in sage, dusty blue and warm ivory.", og, f"{SITE}/", "style.css")
-        + '<body>' + _header("/", "Atlas") + '<main id="content">'
-        + '<section class="home-hero wrap"><div class="home-hero-grid"><div><div class="kicker-line"><p class="eyebrow">Numbered city prints</p></div>'
-        + '<h1 class="home-title">Quiet maps for <em>places that stay.</em></h1>'
-        + '<p class="lead">Meridian Atlas Co. turns city memories into restrained, architectural wall art: map textures, exact coordinates and a calm editorial palette designed for modern interiors.</p>'
-        + '<div class="hero-actions"><a class="btn primary" href="#atlas">View the collection</a><a class="btn" href="#process">The process</a></div>'
-        + f'<p class="hero-note">{count} published city plates. Latest release: {_e(latest_name)}. Each artwork is generated, refined and prepared as a collectible print story.</p>'
+        featured = ('<div class="hero-art-col"><figure class="plate-frame">'
+                    f'<img src="{_e(_asset(first["_slug"], "feed-artwork.jpg"))}" '
+                    f'alt="Featured plate: {_e(first["city"])}, City Atlas No. {_e(first["nn"])}" '
+                    f'width="1080" height="1350" fetchpriority="high">'
+                    '</figure></div>')
+
+    ticker_items = "".join(
+        f'<span>{_e(m["city"])} No. {_e(m["nn"])}</span><span class="dia" aria-hidden="true">&#9670;</span>'
+        for m in cities[:12]) + '<span>AI-created editorial wall art</span><span class="dia" aria-hidden="true">&#9670;</span>'
+    latest_name = latest.get("city") if latest else "new cities"
+
+    return (_head("Meridian Atlas Co. — Editorial City Map Prints",
+                  "A numbered atlas of AI-created city map prints in sage, dusty blue and warm ivory — quiet, editorial wall art for the cities you love.",
+                  og, f"{SITE}/", "style.css", schemas,
+                  preload=_asset(first["_slug"], "feed-artwork.jpg") if first else None)
+        + '<body>' + _header() + '<main id="content">'
+        + '<section class="hero wrap"><div class="hero-grid"><div>'
+        + '<div class="kicker"><p class="eyebrow">City Atlas &mdash; a numbered collection</p></div>'
+        + '<h1>Quiet maps for <span class="rm">places that stay.</span></h1>'
+        + '<p class="lead">Meridian Atlas Co. turns the cities you love into restrained, editorial wall art: '
+        + 'true street grids, exact coordinates and a calm palette of sage, dusty blue and warm ivory, '
+        + 'composed like the plates of a vintage atlas.</p>'
+        + '<div class="hero-actions"><a class="btn primary" href="#collection">View the collection</a>'
+        + '<a class="btn" href="#method">How plates are made</a></div>'
+        + f'<p class="edition">{COMPASS}<span>{count} plate{"s" if count != 1 else ""} published to date &middot; latest release: '
+        + f'{_e(latest_name)}. Every artwork is AI-created, refined by hand and numbered as part of one continuous atlas.</span></p>'
         + '</div>' + featured + '</div></section>'
-        + f'<div class="marquee" aria-hidden="true"><div class="marquee-inner"><span>{marquee}</span><span>{marquee}</span></div></div>'
-        + '<section id="atlas" class="wrap section"><div class="section-head"><div><p class="eyebrow">The atlas</p><h2>A collectible plate for every city.</h2></div><p>Browse the numbered series: each city has a dedicated page with artwork, details, preview assets and a direct print link where available.</p></div>'
+        + f'<div class="ticker" aria-hidden="true"><div class="ticker-track"><span style="display:contents">{ticker_items}</span><span style="display:contents">{ticker_items}</span></div></div>'
+        + '<section id="collection" class="wrap section"><div class="section-head"><div>'
+        + '<p class="eyebrow">The collection</p><h2>A collectible plate for every city.</h2></div>'
+        + '<p>Browse the numbered series. Each city opens as its own plate, with artwork studies, interior scale and a direct path to the print.</p></div>'
         + f'<div class="grid">{cards}</div></section>'
-        + '<section id="process" class="wrap section"><div class="section-head"><div><p class="eyebrow">Process</p><h2>Designed like a print collection, not a file dump.</h2></div><p>The generator builds a complete editorial system from the source artwork: homepage, city pages, gallery assets, motion previews, SEO metadata and tracking.</p></div>'
-        + '<div class="feature-row"><article class="feature"><h3>01<br>City identity</h3><p>Each release receives a number, coordinates, country label and consistent typographic treatment.</p></article><article class="feature"><h3>02<br>Atlas artwork</h3><p>AI-created map compositions are refined into product, detail, pin, story and reel assets.</p></article><article class="feature"><h3>03<br>Print path</h3><p>Visitors move from discovery to the Redbubble print page through clear, trackable calls to action.</p></article></div></section>'
-        + '<section class="wrap section"><p class="quote">“A calm atlas for modern interiors - city memories translated into quiet architectural wall art.”<small>Meridian Atlas Co.</small></p></section>'
-        + '</main>' + _page_end())
+        + '<section id="index" class="wrap section"><div class="section-head"><div>'
+        + '<p class="eyebrow">Index of plates</p><h2>Find your city.</h2></div>'
+        + '<p>The atlas grows through the year. If your city is not listed yet, it may already be on the route.</p></div>'
+        + f'<ol class="plate-index">{index_rows}</ol></section>'
+        + '<section id="method" class="wrap section"><div class="section-head"><div>'
+        + '<p class="eyebrow">Method</p><h2>How a plate is made.</h2></div>'
+        + '<p>Three steps stand between a city and its place on your wall — the same sequence, for every plate in the atlas.</p></div>'
+        + '<div class="method">'
+        + '<article><div class="rn">I.</div><h3>The city is drawn</h3><p>An AI-created map composition captures the real street grid, parks, rails and water in the atlas palette.</p></article>'
+        + '<article><div class="rn">II.</div><h3>The plate is refined</h3><p>Each artwork is reviewed and corrected by hand, then numbered, titled with its local name and set with exact coordinates.</p></article>'
+        + '<article><div class="rn">III.</div><h3>The print is made</h3><p>Plates are prepared at archival resolution and printed on demand via Redbubble, in the size and paper you choose.</p></article>'
+        + '</div></section>'
+        + '<section class="wrap section"><p class="quote">&ldquo;A calm atlas for modern interiors &mdash; city memories translated into quiet, architectural wall art.&rdquo;<small>Meridian Atlas Co.</small></p></section>'
+        + '</main>' + _page_end(count))
 
 
 def build_site(root: Path):
@@ -651,10 +1077,12 @@ def build_site(root: Path):
     (root / "style.css").write_text(CSS, encoding="utf-8")
     (root / "index.html").write_text(_index_page(cities), encoding="utf-8")
     urls = [f"{SITE}/"]
-    for m in cities:
+    n = len(cities)
+    for i, m in enumerate(cities):
+        prev_m, next_m = cities[(i - 1) % n], cities[(i + 1) % n]
         d = root / m["_slug"]
         d.mkdir(exist_ok=True)
-        (d / "index.html").write_text(_city_page(m), encoding="utf-8")
+        (d / "index.html").write_text(_city_page(m, prev_m, next_m, n), encoding="utf-8")
         urls.append(f"{SITE}/{m['_slug']}/")
     from datetime import date as _date
     today = _date.today().isoformat()
@@ -663,7 +1091,7 @@ def build_site(root: Path):
           + "".join(f"<url><loc>{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
           + "</urlset>")
     (root / "sitemap.xml").write_text(sm, encoding="utf-8")
-    print(f"  ok  sito: index.html + {len(cities)} pagine citta' in root + sitemap.xml + Metricool pixel")
+    print(f"  ok  sito v2: index.html + {len(cities)} pagine citta' + sitemap.xml + Metricool pixel")
 
 
 if __name__ == "__main__":

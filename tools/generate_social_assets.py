@@ -22,6 +22,8 @@ Output (cartella citta'):
                             feed-card.jpg     1080x1350  (tipografica)
                             story-artwork.jpg 1080x1920
                             pin-typo.jpg      1000x1500  (variante anti-duplicato)
+                            pin-detail.jpg    1000x1500  (dettaglio verticale 2:3)
+                            pin-card.jpg      1000x1500  (card coordinate 2:3)
                             reel.mp4          1080x1920
 
 Opzioni in meta.json (tutte facoltative):
@@ -276,6 +278,50 @@ def pin_typo(artwork, meta, out):
     save_jpg(c, out / "pin-typo.jpg")
 
 
+def pin_detail(artwork, meta, out):
+    """Pin 2:3 full-bleed con crop di dettaglio DIVERSO da feed-detail
+    (zoom e finestra differenti): terza variante visiva per la cadenza
+    multi-board senza ripetere la stessa immagine."""
+    band = 130
+    img_h = 1500 - band
+    det = crop_zoom(artwork, 1000, img_h, cx=0.42, cy=0.56, zoom=2.5)
+    c = Image.new("RGB", (1000, 1500), IVORY)
+    c.paste(det, (0, 0))
+    d = ImageDraw.Draw(c)
+    d.line([(0, img_h), (1000, img_h)], fill=HAIR, width=1)
+    txt = f"THE DETAIL - {meta['city']} - NO. {meta['nn']}"
+    f1 = fit_font(F_INTER_SB, txt, 900, 24, 15, tracking=6)
+    asc, desc = f1.getmetrics()
+    y = img_h + (band - (asc + desc) - 30) // 2
+    y += draw_tracked(d, 500, y, txt, f1, 6, BLACK) + 10
+    draw_tracked(d, 500, y, "MERIDIANATLAS.CO", font(F_INTER_M, 17), 5, GRAY)
+    save_jpg(c, out / "pin-detail.jpg")
+
+
+def pin_card(meta, out):
+    """Card tipografica coordinate in formato pin 2:3: quarta variante
+    visiva (solo tipografia, nessun artwork) distinta da pin-typo."""
+    c = Image.new("RGB", (1000, 1500), IVORY)
+    d = ImageDraw.Draw(c)
+    f_over = font(F_INTER_M, 24)
+    f_city = fit_font(F_PLAYFAIR, meta["city"], 860, 160, 76)
+    f_country = font(F_INTER_M, 30)
+    f_coords = font(F_INTER_R, 30)
+    f_tag = font(F_INTER_M, 21)
+    h_city = sum(f_city.getmetrics())
+    block = 24 + 70 + h_city + 32 + 30 + 60 + 14 + 60 + 30 + 90 + 21
+    y = (1500 - block) // 2 - 24
+    y += draw_tracked(d, 500, y, f"CITY ATLAS - NO. {meta['nn']}", f_over, 9, GRAY) + 70
+    y += draw_tracked(d, 500, y, meta["city"], f_city, 6, BLACK) + 32
+    y += draw_tracked(d, 500, y, meta["country"], f_country, 12, BLACK) + 60
+    diamond(d, 500, y + 7)
+    y += 14 + 60
+    y += draw_tracked(d, 500, y, meta["coords"], f_coords, 2, GRAY) + 90
+    draw_tracked(d, 500, y, "EDITORIAL WALL ART - PREMIUM PRINT", f_tag, 7, BLACK)
+    draw_tracked(d, 500, 1500 - 120, "MERIDIANATLAS.CO", font(F_INTER_SB, 20), 6, GRAY)
+    save_jpg(c, out / "pin-card.jpg")
+
+
 def reel(artwork_path, src, out):
     custom = src / "reel.mp4"
     target = out / "reel.mp4"
@@ -355,6 +401,8 @@ def main(city_dir):
     feed_card(meta, folder)
     story_artwork(artwork, meta, folder)
     pin_typo(artwork, meta, folder)
+    pin_detail(artwork, meta, folder)
+    pin_card(meta, folder)
     reel(art_p, src, folder)
     build_site(folder.resolve().parents[2])
 

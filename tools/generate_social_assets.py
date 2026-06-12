@@ -500,7 +500,7 @@ def _header(home_link="/", label="Atlas"):
 
 FOOTER = ('<footer class="footer"><div class="wrap">'
           '<p>All artworks are AI-created and refined for archival printing.</p>'
-          '<p>© Meridian Atlas Co. — Editorial wall art for the cities you love.</p>'
+          '<p>© Meridian Atlas Co. - Editorial wall art for the cities you love.</p>'
           '</div></footer>')
 
 
@@ -540,7 +540,7 @@ def _city_page(m):
     slug, nn, city = m["_slug"], str(m["nn"]), m["city"]
     country = m.get("country", "")
     coords = m.get("coords", "")
-    desc = m.get("story") or (f"{city} — City Atlas No. {nn}. Editorial, AI-created map print in sage, dusty blue and warm ivory.")
+    desc = m.get("story") or (f"{city} - City Atlas No. {nn}. Editorial, AI-created map print in sage, dusty blue and warm ivory.")
     canonical = f"{SITE}/{slug}/"
     artwork = _asset(slug, "feed-artwork.jpg")
     detail = _asset(slug, "feed-detail.jpg")
@@ -561,17 +561,17 @@ def _city_page(m):
     reel_html = (f'<figure><video class="plate" autoplay muted loop playsinline preload="metadata" src="{_e(reel)}"></video>'
                  f'<figcaption class="caption">Motion preview</figcaption></figure>') if m.get("_has_reel") else ""
     return (
-        _head(f"{city} City Atlas Print — No. {nn} | Meridian Atlas Co.", desc, artwork, canonical, "../style.css", product_schema)
+        _head(f"{city} City Atlas Print - No. {nn} | Meridian Atlas Co.", desc, artwork, canonical, "../style.css", product_schema)
         + '<body>' + _header("/", "Home")
         + '<main id="content" class="wrap">'
         + '<section class="city-hero"><p class="breadcrumb"><a href="/">The Atlas</a> / City print</p>'
         + '<div class="city-title"><div>'
-        + f'<p class="eyebrow">City Atlas — No. {_e(nn)}</p><h1>{_e(city)}</h1>'
+        + f'<p class="eyebrow">City Atlas - No. {_e(nn)}</p><h1>{_e(city)}</h1>'
         + f'<div class="meta-line"><span>{_e(country)}</span><span>{_e(coords)}</span></div>'
         + f'<p class="story">{_e(desc)}</p>'
         + '<div class="hero-actions">' + _cta_html(m) + '<a class="btn" href="/#atlas">Explore the series</a></div>'
         + '<div class="city-panel"><dl>'
-        + f'<dt>Series</dt><dd>City Atlas — No. {_e(nn)}</dd>'
+        + f'<dt>Series</dt><dd>City Atlas - No. {_e(nn)}</dd>'
         + f'<dt>Palette</dt><dd>Sage, dusty blue and warm ivory</dd>'
         + f'<dt>Method</dt><dd>AI-created artwork, editorial layout, print-ready assets</dd>'
         + '</dl><p class="note">Availability and final print options are managed on Redbubble.</p></div>'
@@ -595,7 +595,7 @@ def _index_page(cities):
     cards = "".join(
         f'<a class="card" href="/{_e(m["_slug"])}/"><figure>'
         f'<img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" '
-        f'alt="{_e(m["city"])} map print — City Atlas No. {_e(m["nn"])}" loading="lazy">'
+        f'alt="{_e(m["city"])} map print - City Atlas No. {_e(m["nn"])}" loading="lazy">'
         f'<figcaption><div class="no">No. {_e(m["nn"])}</div><div class="name">{_e(m["city"])}</div>'
         f'<div class="coords">{_e(m.get("coords", ""))}</div></figcaption></figure></a>'
         for m in cities)
@@ -605,8 +605,8 @@ def _index_page(cities):
                     f'alt="Featured Meridian Atlas city print: {_e(first["city"])}"></div>')
     latest_name = latest.get("city") if latest else "New cities"
     return (
-        _head("The City Atlas — Meridian Atlas Co.",
-              "A numbered series of editorial, AI-created city map prints — sage, dusty blue and warm ivory, designed for considered interiors.",
+        _head("The City Atlas - Meridian Atlas Co.",
+              "A numbered series of editorial, AI-created city map prints - sage, dusty blue and warm ivory, designed for considered interiors.",
               og, f"{SITE}/", "style.css")
         + '<body>' + _header("/", "Atlas")
         + '<main id="content">'
@@ -619,8 +619,8 @@ def _index_page(cities):
         + '<section id="atlas" class="wrap section"><div class="section-head"><div><p class="eyebrow">The numbered series</p><h2>Choose a city. Keep the memory.</h2></div><p>Each plate combines map texture, coordinates and editorial restraint, prepared for premium wall-art presentation.</p></div>'
         + f'<div class="grid">{cards}</div></section>'
         + '<section id="process" class="wrap section"><div class="section-head"><div><p class="eyebrow">Process</p><h2>From city data to collectible print.</h2></div><p>The site generator now presents the collection with richer storytelling, stronger calls to action and cleaner product pages.</p></div>'
-        + '<div class="feature-row"><article class="feature"><h3>01 — Atlas</h3><p>Every city receives a numbered identity with coordinates, country and a consistent editorial system.</p></article><article class="feature"><h3>02 — Artwork</h3><p>AI-created map compositions are refined into feed, story, pin, detail and motion assets.</p></article><article class="feature"><h3>03 — Print</h3><p>City pages guide visitors from discovery to the Redbubble print page with trackable campaign links.</p></article></div></section>'
-        + '<section class="wrap section"><p class="quote">“A calm atlas for modern interiors — city memories translated into quiet, architectural wall art.”<small>Meridian Atlas Co.</small></p></section>'
+        + '<div class="feature-row"><article class="feature"><h3>01 - Atlas</h3><p>Every city receives a numbered identity with coordinates, country and a consistent editorial system.</p></article><article class="feature"><h3>02 - Artwork</h3><p>AI-created map compositions are refined into feed, story, pin, detail and motion assets.</p></article><article class="feature"><h3>03 - Print</h3><p>City pages guide visitors from discovery to the Redbubble print page with trackable campaign links.</p></article></div></section>'
+        + '<section class="wrap section"><p class="quote">“A calm atlas for modern interiors - city memories translated into quiet, architectural wall art.”<small>Meridian Atlas Co.</small></p></section>'
         + '</main>' + _page_end())
 
 

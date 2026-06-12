@@ -26,31 +26,56 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           pip install pillow
           sudo apt-get update -q
           sudo apt-get install -y -q ffmpeg
 
-      - name: Generate assets
+      - name: Generate social assets
         run: |
+          set -euo pipefail
+
+          found=0
           for d in assets/social/ma-*/src; do
             [ -d "$d" ] || continue
+            found=1
             city_dir="$(dirname "$d")"
             echo ""
             echo "=== Genero $city_dir ==="
-            python tools/generate_social_assets.py "$city_dir" || echo "::warning::fallita $city_dir, continuo"
+            python tools/generate_social_assets.py "$city_dir"
           done
+
+          if [ "$found" -eq 0 ]; then
+            echo "::warning::Nessuna cartella assets/social/ma-*/src trovata"
+          fi
 
       - name: Build site
         run: |
+          set -euo pipefail
           python tools/generate_social_assets.py --site
 
       - name: Commit generated assets + site
         run: |
+          set -euo pipefail
+
           git config user.name "meridian-asset-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add -A assets/social index.html style.css sitemap.xml
+          # Aggiunge sempre gli asset social generati.
+          git add -A assets/social
+
+          # Aggiunge i file sito solo se esistono, evitando errori pathspec.
+          [ -f index.html ] && git add -A index.html || true
+          [ -f style.css ] && git add -A style.css || true
+          [ -f sitemap.xml ] && git add -A sitemap.xml || true
+
+          # Aggiunge le pagine citta' generate in root, es. ma-01-milano/.
           find . -maxdepth 1 -type d -name "ma-*" -print0 | xargs -0 -r git add -A
 
-          git diff --cached --quiet || { git commit -m "auto: assets + site [skip ci]"; git push; }
+          if git diff --cached --quiet; then
+            echo "Nessuna modifica da committare."
+          else
+            git commit -m "auto: assets + site [skip ci]"
+            git push
+          fi

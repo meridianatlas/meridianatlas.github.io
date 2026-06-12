@@ -913,8 +913,8 @@ def _cta_html(m):
 def _city_page(m, prev_m, next_m, count):
     slug, nn, city = m["_slug"], str(m["nn"]), m["city"]
     country, coords = m.get("country", ""), m.get("coords", "")
-    desc = m.get("story") or (f"An editorial, AI-created map of {city} — plate No. {nn} in the "
-                              f"City Atlas — drawn in sage, dusty blue and warm ivory and prepared "
+    desc = m.get("story") or (f"An editorial, AI-created map of {city} - plate No. {nn} in the "
+                              f"City Atlas - drawn in sage, dusty blue and warm ivory and prepared "
                               f"for archival printing.")
     canonical = f"{SITE}/{slug}/"
     of_n = f" of {count}" if count > 1 else ""
@@ -931,7 +931,7 @@ def _city_page(m, prev_m, next_m, count):
          "image": _abs(artwork), "description": desc, "url": canonical},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "The Atlas", "item": f"{SITE}/"},
-            {"@type": "ListItem", "position": 2, "name": f"{city} — No. {nn}", "item": canonical}]},
+            {"@type": "ListItem", "position": 2, "name": f"{city} - No. {nn}", "item": canonical}]},
     ]
 
     figs, fig_i = [], 0
@@ -961,7 +961,7 @@ def _city_page(m, prev_m, next_m, count):
                 + leaf_link(next_m, "next", "Next plate &rarr;")
                 + '</nav>')
 
-    return (_head(f"{city} Map Print — City Atlas No. {nn} | Meridian Atlas Co.",
+    return (_head(f"{city} Map Print - City Atlas No. {nn} | Meridian Atlas Co.",
                   desc, artwork, canonical, "../style.css", schemas, preload=artwork)
         + '<body>' + _header()
         + '<main id="content" class="wrap">'
@@ -998,16 +998,16 @@ def _index_page(cities):
     latest = cities[-1] if cities else None
     og = _asset(first["_slug"], "feed-artwork.jpg") if first else "/"
 
-    schemas = [{"@type": "ItemList", "name": "City Atlas — numbered plates",
+    schemas = [{"@type": "ItemList", "name": "City Atlas - numbered plates",
                 "itemListElement": [
                     {"@type": "ListItem", "position": i + 1,
-                     "name": f'{m["city"]} — No. {m["nn"]}', "url": f'{SITE}/{m["_slug"]}/'}
+                     "name": f'{m["city"]} - No. {m["nn"]}', "url": f'{SITE}/{m["_slug"]}/'}
                     for i, m in enumerate(cities)]}]
 
     cards = "".join(
         f'<figure class="card"><a href="/{_e(m["_slug"])}/">'
         f'<img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" '
-        f'alt="{_e(m["city"])} map print — City Atlas No. {_e(m["nn"])}" '
+        f'alt="{_e(m["city"])} map print - City Atlas No. {_e(m["nn"])}" '
         f'width="1000" height="1500" loading="lazy" style="view-transition-name:plate-{_e(m["_slug"])}">'
         f'<figcaption><div class="no">Plate No. {_e(m["nn"])}</div>'
         f'<div class="name">{_e(m["city"])}</div>'
@@ -1032,8 +1032,8 @@ def _index_page(cities):
         for m in cities[:12]) + '<span>AI-created editorial wall art</span><span class="dia" aria-hidden="true">&#9670;</span>'
     latest_name = latest.get("city") if latest else "new cities"
 
-    return (_head("Meridian Atlas Co. — Editorial City Map Prints",
-                  "A numbered atlas of AI-created city map prints in sage, dusty blue and warm ivory — quiet, editorial wall art for the cities you love.",
+    return (_head("Meridian Atlas Co. - Editorial City Map Prints",
+                  "A numbered atlas of AI-created city map prints in sage, dusty blue and warm ivory - quiet, editorial wall art for the cities you love.",
                   og, f"{SITE}/", "style.css", schemas,
                   preload=_asset(first["_slug"], "feed-artwork.jpg") if first else None)
         + '<body>' + _header() + '<main id="content">'
@@ -1059,7 +1059,7 @@ def _index_page(cities):
         + f'<ol class="plate-index">{index_rows}</ol></section>'
         + '<section id="method" class="wrap section"><div class="section-head"><div>'
         + '<p class="eyebrow">Method</p><h2>How a plate is made.</h2></div>'
-        + '<p>Three steps stand between a city and its place on your wall — the same sequence, for every plate in the atlas.</p></div>'
+        + '<p>Three steps stand between a city and its place on your wall - the same sequence, for every plate in the atlas.</p></div>'
         + '<div class="method">'
         + '<article><div class="rn">I.</div><h3>The city is drawn</h3><p>An AI-created map composition captures the real street grid, parks, rails and water in the atlas palette.</p></article>'
         + '<article><div class="rn">II.</div><h3>The plate is refined</h3><p>Each artwork is reviewed and corrected by hand, then numbered, titled with its local name and set with exact coordinates.</p></article>'

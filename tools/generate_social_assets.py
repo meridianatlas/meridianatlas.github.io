@@ -497,7 +497,7 @@ def _header(home_link="/", label="Atlas"):
 
 FOOTER = ('<footer class="footer"><div class="wrap">'
           '<p>All artworks are AI-created and refined for archival printing.</p>'
-          '<p>© Meridian Atlas Co. — Editorial wall art for the cities you love.</p>'
+          '<p>© Meridian Atlas Co. - Editorial wall art for the cities you love.</p>'
           '</div></footer>')
 
 
@@ -536,7 +536,7 @@ def _city_page(m):
     slug, nn, city = m["_slug"], str(m["nn"]), m["city"]
     country = m.get("country", "")
     coords = m.get("coords", "")
-    desc = m.get("story") or (f"{city} — City Atlas No. {nn}. Editorial, AI-created map print in sage, dusty blue and warm ivory.")
+    desc = m.get("story") or (f"{city} - City Atlas No. {nn}. Editorial, AI-created map print in sage, dusty blue and warm ivory.")
     canonical = f"{SITE}/{slug}/"
     artwork = _asset(slug, "feed-artwork.jpg")
     detail = _asset(slug, "feed-detail.jpg")
@@ -546,13 +546,13 @@ def _city_page(m):
     product_schema = {"@context":"https://schema.org","@type":"Product","name":f"{city} City Atlas Print","brand":{"@type":"Brand","name":"Meridian Atlas Co."},"image":_abs(artwork),"description":desc,"url":canonical}
     gallery_mockup = (f'<figure><img class="plate" src="{_e(mockup)}" alt="{_e(city)} framed map print mockup" loading="lazy"><figcaption class="caption">Interior scale</figcaption></figure>') if mockup else ""
     reel_html = (f'<figure><video class="plate" autoplay muted loop playsinline preload="metadata" src="{_e(reel)}"></video><figcaption class="caption">Motion preview</figcaption></figure>') if m.get("_has_reel") else ""
-    return (_head(f"{city} City Atlas Print — No. {nn} | Meridian Atlas Co.", desc, artwork, canonical, "../style.css", product_schema)
+    return (_head(f"{city} City Atlas Print - No. {nn} | Meridian Atlas Co.", desc, artwork, canonical, "../style.css", product_schema)
         + '<body>' + _header("/", "Home")
         + '<main id="content" class="wrap"><section class="city-hero"><p class="breadcrumb"><a href="/">The Atlas</a> / City print</p><div class="city-title"><div>'
-        + f'<p class="eyebrow">City Atlas — No. {_e(nn)}</p><h1>{_e(city)}</h1><div class="meta-line"><span>{_e(country)}</span><span>{_e(coords)}</span></div><p class="story">{_e(desc)}</p>'
+        + f'<p class="eyebrow">City Atlas - No. {_e(nn)}</p><h1>{_e(city)}</h1><div class="meta-line"><span>{_e(country)}</span><span>{_e(coords)}</span></div><p class="story">{_e(desc)}</p>'
         + '<div class="hero-actions">' + _cta_html(m) + '<a class="btn" href="/#atlas">Explore the series</a></div>'
         + '<div class="city-panel"><dl>'
-        + f'<dt>Series</dt><dd>City Atlas — No. {_e(nn)}</dd><dt>Palette</dt><dd>Sage, dusty blue and warm ivory</dd><dt>Method</dt><dd>AI-created artwork, editorial layout, print-ready assets</dd>'
+        + f'<dt>Series</dt><dd>City Atlas - No. {_e(nn)}</dd><dt>Palette</dt><dd>Sage, dusty blue and warm ivory</dd><dt>Method</dt><dd>AI-created artwork, editorial layout, print-ready assets</dd>'
         + '</dl><p class="note">Availability and final print options are managed on Redbubble.</p></div></div>'
         + f'<figure><img class="plate" src="{_e(artwork)}" alt="{_e(city)} editorial city map print"></figure></div></section>'
         + '<section class="section"><div class="section-head"><div><p class="eyebrow">Gallery</p><h2>Artwork, details and campaign assets.</h2></div><p>Each city page presents the print as a small product story instead of a basic image gallery.</p></div>'
@@ -569,7 +569,7 @@ def _index_page(cities):
     latest = cities[-1] if cities else None
     og = _asset(first["_slug"], "feed-artwork.jpg") if first else "/"
     cards = "".join(
-        f'<a class="card" href="/{_e(m["_slug"])}/"><figure><img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" alt="{_e(m["city"])} map print — City Atlas No. {_e(m["nn"])}" loading="lazy"><figcaption><div class="no">No. {_e(m["nn"])}</div><div class="name">{_e(m["city"])}</div><div class="coords">{_e(m.get("coords", ""))}</div></figcaption></figure></a>'
+        f'<a class="card" href="/{_e(m["_slug"])}/"><figure><img class="plate" src="{_e(_asset(m["_slug"], "pin-typo.jpg"))}" alt="{_e(m["city"])} map print - City Atlas No. {_e(m["nn"])}" loading="lazy"><figcaption><div class="no">No. {_e(m["nn"])}</div><div class="name">{_e(m["city"])}</div><div class="coords">{_e(m.get("coords", ""))}</div></figcaption></figure></a>'
         for m in cities)
     featured = ""
     latest_name = latest.get("city") if latest else "New cities"
@@ -577,7 +577,7 @@ def _index_page(cities):
         featured = (f'<figure class="hero-art"><img src="{_e(_asset(first["_slug"], "feed-artwork.jpg"))}" alt="Featured Meridian Atlas city print: {_e(first["city"])}"><figcaption><span>No. {_e(first["nn"])}</span><span>{_e(first["city"])}</span></figcaption></figure>')
     city_names = " • ".join(_e(m.get("city", "")) for m in cities[:12])
     marquee = (city_names + " • Editorial city prints • AI-created wall art • ") * 2
-    return (_head("Meridian Atlas Co. — Editorial City Map Prints",
+    return (_head("Meridian Atlas Co. - Editorial City Map Prints",
               "Premium editorial city map prints: a numbered collection of AI-created atlas artworks in sage, dusty blue and warm ivory.", og, f"{SITE}/", "style.css")
         + '<body>' + _header("/", "Atlas") + '<main id="content">'
         + '<section class="home-hero wrap"><div class="home-hero-grid"><div><div class="kicker-line"><p class="eyebrow">Numbered city prints</p></div>'
@@ -591,7 +591,7 @@ def _index_page(cities):
         + f'<div class="grid">{cards}</div></section>'
         + '<section id="process" class="wrap section"><div class="section-head"><div><p class="eyebrow">Process</p><h2>Designed like a print collection, not a file dump.</h2></div><p>The generator builds a complete editorial system from the source artwork: homepage, city pages, gallery assets, motion previews, SEO metadata and tracking.</p></div>'
         + '<div class="feature-row"><article class="feature"><h3>01<br>City identity</h3><p>Each release receives a number, coordinates, country label and consistent typographic treatment.</p></article><article class="feature"><h3>02<br>Atlas artwork</h3><p>AI-created map compositions are refined into product, detail, pin, story and reel assets.</p></article><article class="feature"><h3>03<br>Print path</h3><p>Visitors move from discovery to the Redbubble print page through clear, trackable calls to action.</p></article></div></section>'
-        + '<section class="wrap section"><p class="quote">“A calm atlas for modern interiors — city memories translated into quiet architectural wall art.”<small>Meridian Atlas Co.</small></p></section>'
+        + '<section class="wrap section"><p class="quote">“A calm atlas for modern interiors - city memories translated into quiet architectural wall art.”<small>Meridian Atlas Co.</small></p></section>'
         + '</main>' + _page_end())
 
 

@@ -1,0 +1,9 @@
+{
+  "nn": "03",
+  "city": "LONDON",
+  "country": "UNITED KINGDOM",
+  "coords": "51.5074° N, 0.1278° W",
+  "feed_crop": "top",
+  "story_mode": "bands",
+  "overlay_pins": false
+}
